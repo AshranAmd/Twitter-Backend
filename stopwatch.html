@@ -1,0 +1,174 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        #hours{
+            display: inline;
+
+            background-color: beige;
+        }
+        #minutes{
+            background-color: beige;
+            display: inline;
+
+        }
+        #seconds{
+            background-color: beige;
+            display: inline;
+
+        }
+        #container{
+            background-color:red;
+            display: block;
+            align-items: center;
+            justify-content: center;
+        }
+        span{
+            color:white;
+        }
+        header{
+            color:white
+        }
+        h1{
+            color:burlywood;    
+            text-align:center;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+</head>
+<body>
+    <p>do you want a stopwatch to appear on the screen</p>
+    <input id = "imput" type="text">
+    <button id = "buttonwa" onclick="displaying()">submit your response</button>
+   <div id="container">
+       <h1>Ariz Stopwatch</h1>
+    <header>The Moments since when you pressed start:</header>
+    <p id="hours">0</p><span>:</span>
+    <p id="minutes">0</p><span>:</span>
+    <p id="seconds">0</p>
+    <button onclick="starting()">Start</button>
+    <button onclick="stopping()">Stop</button>
+    <button onclick="reset()">Reset</button>
+    <br/>
+    <input type="text" id = "task">
+    <button onclick="to()">add a task</button>
+    <div id="ashran"></div>
+
+</p>  
+</body>
+<script>
+        var seconds = document.getElementById('seconds');
+        var hours = document.getElementById('hours');
+        var minutes = document.getElementById('minutes');
+        var seconding =  0 ;
+        var container = document.getElementById('container');
+        var button = document.getElementById('buttonwa');
+        var input = document.getElementById('imput');
+        var yes = 'yes';
+        var no = 'no';
+    
+
+        // displaying stopwatch
+
+        function displaying(){
+            if (input.value === 'yes'){
+            container.style.display = (input.value == yes) ? "block" : "none" ; 
+            container.style.display = (input.value == no) ? "none" : "block" ;
+            console.log(input.value);
+            console.log(container.style.display); }
+            else
+                input.value = "type a logical response";
+                console.log("failed");
+                container.style.display = "none";
+            
+
+        }
+
+        //
+
+        function second(){
+            seconding = seconding + 1;
+            minuter = seconding;
+            if (seconding>60){
+                seconding = seconding%60;
+            }
+            console.log(seconding);
+            seconds.innerHTML = seconding;
+        }
+        function minute(){
+            if (minuter>60){
+            minuting = minuter/60;
+            minuting = parseInt(minuting);
+            minutes.innerHTML = minuting;}
+            else{
+                minuter = 0;
+            }
+        }
+        function starting(){
+        settingSecond = setInterval(second,1000);
+        settingMinute = setInterval(minute,1000);
+        }
+        function stopping(){
+        clearTimeout(settingSecond);
+        clearTimeout(settingMinute);
+        }
+        function reset(){
+            seconding = 0 ;
+            seconds.innerHTML = seconding;
+        }
+        
+
+
+
+
+
+        // var date =  new Date();
+
+        // function second(){
+        //     var date =  new Date();
+        //     var seconding = date.getSeconds();
+        //     seconds.innerHTML=seconding;
+        // }
+
+        // function minute(){
+        //     var date =  new Date();
+        //     var minuting = date.getMinutes(); 
+        //     minutes.innerHTML=minuting;
+        // }
+
+        // function hour(){
+        //     var date =  new Date();
+        //     var houring = date.getHours(); 
+        //     if (houring >12){
+        //         houring = houring%12;
+        //     }
+        //     else{
+        //         houring = houring;  
+        //     }
+        //     hours.innerHTML=houring;
+        // }
+        // function calling(){
+        // setInterval(hour,1000);
+        // setInterval(minute,1000);
+        // setInterval(second,1000);
+        // }
+        // calling();
+
+        function to(){
+            var value = document.getElementById('task').value;
+            var node = document.createElement("p");
+            console.log(value)
+            var child = document.createTextNode(value);
+            node.appendChild(child);
+            var ashran = document.getElementById('ashran');
+            ashran.appendChild(node);
+        }
+
+        const data = [{name:"ashran","tweet":"treat everyday a separate entity and start every morning happily as they say one day at a time"},
+                {name:"furquan","tweet":"money saved is money earned as they say in old sayings"},
+                {name:"faraz","tweet":"please stop this shit now you guys are just stupidly posting shit keep that shit to yourself"}];
+
+</script>
+</html>

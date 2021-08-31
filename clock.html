@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        #hours{
+            display: inline;
+
+            background-color: beige;
+        }
+        #minutes{
+            background-color: beige;
+            display: inline;
+
+        }
+        #seconds{
+            background-color: beige;
+            display: inline;
+
+        }
+        .container{
+            background-color: black;
+            align-items: center;
+            justify-content: center;
+        }
+        span{
+            color:white;
+        }
+        header{
+            color:white
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+</head>
+<body>
+   <div class="container">
+    <header>The Moment you are living in is:</header>
+    <p id="hours">hello </p><span>:</span>
+    <p id="minutes">helo </p><span>:</span>
+    <p id="seconds">hii</p>
+   </div>  
+</body>
+<script>
+        var seconds = document.getElementById('seconds');
+        var hours = document.getElementById('hours');
+        var minutes = document.getElementById('minutes');
+        var date =  new Date();
+
+        function second(){
+            var date =  new Date();
+            var seconding = date.getSeconds();
+            seconds.innerHTML=seconding;
+        }
+
+        function minute(){
+            var date =  new Date();
+            var minuting = date.getMinutes(); 
+            minutes.innerHTML=minuting;
+        }
+
+        function hour(){
+            var date =  new Date();
+            var houring = date.getHours(); 
+            if (houring >12){
+                houring = houring%12;
+            }
+            else{
+                houring = houring;  
+            }
+            hours.innerHTML=houring;
+        }
+        function calling(){
+        setInterval(hour,1000);
+        setInterval(minute,1000);
+        setInterval(second,1000);
+        }
+        calling();
+</script>
+</html>

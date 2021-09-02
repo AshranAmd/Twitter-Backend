@@ -50,7 +50,7 @@ app.use(function(req, res, next) {
 // //api endpoints
 
 app.get('/', async (req,res)=>{
-    const tweet = await user.tweets.find({}).limit(1).skip(16);
+    const tweet = await user.tweets.find({}).limit(3).skip(15);
     res.send(tweet)
     // console.log(data);
 

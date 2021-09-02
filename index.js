@@ -1,7 +1,8 @@
 const { json } = require('express');
 const express = require('express');
 // const user = require('./tweetsdb');
-const credential = require('./credential');
+// const credential = require('./credential');
+const UserDetails = require('./userDetailDb')
 
 //config
 
@@ -130,42 +131,79 @@ app.use(function(req, res, next) {
 
   // register saving credential
 
-  app.post('/register',(req,res)=>{
+  // app.post('/register',(req,res)=>{
 
-    //setting the values of compose 
-    // var anotherone = new tweets({'name' : req.body.name,'tweet' :req.body.tweet});
+  //   //setting the values of compose 
+  //   // var anotherone = new tweets({'name' : req.body.name,'tweet' :req.body.tweet});
     
-    // saving 
+  //   // saving 
     
-        var anotherone = new credential.credentials({'username' :req.body.username ,'password':req.body.password});
-        res.redirect('http://localhost:3000/home');
-        // res.send("saved ")
-        console.log(req.body)
-        anotherone.save(function(err,save){
-            if(err){
-                console.log(err)
-            }
-            else{
-                console.log("saved successfully", anotherone)
-            }
-        })
-    })
+  //       var anotherone = new credential.credentials({'username' :req.body.username ,'password':req.body.password});
+  //       res.redirect('http://localhost:3000/login');
+  //       // res.send("saved ")
+  //       console.log(req.body)
+  //       anotherone.save(function(err,save){
+  //           if(err){
+  //               console.log(err)
+  //           }
+  //           else{
+  //               console.log("saved successfully", anotherone)
+  //           }
+  //       })
+  //   })
 
-    // logging in reqeust
+  //   // logging in reqeust
 
-    app.post('/login', async (req,res)=>{
+  //   app.post('/login', async (req,res)=>{
 
-      var username = req.body.username;
-      var password = req.body.password;
-      console.log(username)
-      console.log(password)
-      console.log(req.body)
+  //     var username = req.body.username;
+  //     var password = req.body.password;
+  //     console.log(username)
+  //     console.log(password)
+  //     console.log(req.body)
 
-      var result = await credential.credentials.find({"username":username,"password":password});
-      console.log(result.length)
-      if(result.length === 0){
-        res.send('Go to the previous page and try again to login because previous credentials were not right.')
-      }
-      else {res.redirect('http://localhost:3000/home')}
+  //     var result = await credential.credentials.find({"username":username,"password":password});
+  //     console.log(result.length)
+  //     if(result.length === 0){
+  //       res.send('Go to the previous page and try again to login because previous credentials were not right.')
+  //     }
+  //     else {res.redirect('http://localhost:3000/home')}
 
-    })
+  //   })
+
+
+    // fetcing acccount details 
+
+    // app.get('/credentials', async(req,res)=>{
+
+    //   var users = await credential.credentials.find({});
+    //   res.send(users)
+
+    // })
+
+
+//userdetails
+
+app.post('/user', (req,res)=>{
+
+  var data = req.body;
+  var dete = new UserDetails.details(data);
+  dete.save(function(err,result){
+    if(err){
+      console.log(err);
+    }
+    else{console.log('saved successfully',dete)}
+  }
+  )
+  res.redirect('http://localhost:3000/home');
+
+})
+
+// fetching user details
+
+app.get('/user', async (req,res)=>{
+
+  var dete = await UserDetails.details.find({});
+  res.send(dete)
+
+})

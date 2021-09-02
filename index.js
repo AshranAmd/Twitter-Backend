@@ -12,6 +12,7 @@ const port = 8080;
 // parser 
 
 app.use(express.json());
+var urlendcoded = app.use(express.urlencoded({extended:false}));
 
 // request and response and cors protocol
 
@@ -49,7 +50,7 @@ app.use(function(req, res, next) {
 // //api endpoints
 
 app.get('/', async (req,res)=>{
-    const tweet = await user.tweets.find({});
+    const tweet = await user.tweets.find({}).limit(1).skip(16);
     res.send(tweet)
     // console.log(data);
 
@@ -111,8 +112,10 @@ app.post('/save',(req,res)=>{
   
   // saving 
   
-      var anotherone = new user.tweets({'name' :req.body.name ,'tweet':req.body.tweet});
-      res.send('saved with success');
+      var anotherone = new user.tweets({'name' :req.body.twitter ,'tweet':req.body.tweetContent});
+      res.redirect('http://localhost:3000/home');
+      // res.send("saved ")
+      console.log(req.body)
       anotherone.save(function(err,save){
           if(err){
               console.log(err)

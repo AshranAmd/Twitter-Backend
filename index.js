@@ -1,6 +1,7 @@
 const { json } = require('express');
 const express = require('express');
-const user = require('./tweetsdb')
+// const user = require('./tweetsdb');
+const credential = require('./credential');
 
 //config
 
@@ -49,14 +50,14 @@ app.use(function(req, res, next) {
 
 // //api endpoints
 
-app.get('/', async (req,res)=>{
-    const tweet = await user.tweets.find({}).limit(3).skip(15);
-    res.send(tweet)
-    // console.log(data);
+// app.get('/', async (req,res)=>{
+//     const tweet = await user.tweets.find({}).limit(3).skip(15);
+//     res.send(tweet)
+//     // console.log(data);
 
 
-}
-)
+// }
+// )
 //delete request 
 
 // app.delete('/', async (req,res)=>{
@@ -105,23 +106,66 @@ app.get('/', async (req,res)=>{
 
 // app.get("/", (req,res)=>{res.send(refined)});
 
-app.post('/save',(req,res)=>{
+// app.post('/save',(req,res)=>{
 
-  //setting the values of compose 
-  // var anotherone = new tweets({'name' : req.body.name,'tweet' :req.body.tweet});
+//   //setting the values of compose 
+//   // var anotherone = new tweets({'name' : req.body.name,'tweet' :req.body.tweet});
   
-  // saving 
+//   // saving 
   
-      var anotherone = new user.tweets({'name' :req.body.twitter ,'tweet':req.body.tweetContent});
-      res.redirect('http://localhost:3000/home');
-      // res.send("saved ")
+//       var anotherone = new user.tweets({'name' :req.body.twitter ,'tweet':req.body.tweetContent});
+//       res.redirect('http://localhost:3000/home');
+//       // res.send("saved ")
+//       console.log(req.body)
+//       anotherone.save(function(err,save){
+//           if(err){
+//               console.log(err)
+//           }
+//           else{
+//               console.log("saved successfully", anotherone)
+//           }
+//       })
+//   })
+
+
+  // register saving credential
+
+  app.post('/register',(req,res)=>{
+
+    //setting the values of compose 
+    // var anotherone = new tweets({'name' : req.body.name,'tweet' :req.body.tweet});
+    
+    // saving 
+    
+        var anotherone = new credential.credentials({'username' :req.body.username ,'password':req.body.password});
+        res.redirect('http://localhost:3000/home');
+        // res.send("saved ")
+        console.log(req.body)
+        anotherone.save(function(err,save){
+            if(err){
+                console.log(err)
+            }
+            else{
+                console.log("saved successfully", anotherone)
+            }
+        })
+    })
+
+    // logging in reqeust
+
+    app.post('/login', async (req,res)=>{
+
+      var username = req.body.username;
+      var password = req.body.password;
+      console.log(username)
+      console.log(password)
       console.log(req.body)
-      anotherone.save(function(err,save){
-          if(err){
-              console.log(err)
-          }
-          else{
-              console.log("saved successfully", anotherone)
-          }
-      })
-  })
+
+      var result = await credential.credentials.find({"username":username,"password":password});
+      console.log(result.length)
+      if(result.length === 0){
+        res.send('Go to the previous page and try again to login because previous credentials were not right.')
+      }
+      else {res.redirect('http://localhost:3000/home')}
+
+    })
